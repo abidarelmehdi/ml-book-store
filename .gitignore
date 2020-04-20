@@ -1,0 +1,17 @@
+venv
+media
+static
+*.log
+*.pot
+.vscode/
+*.egg-info
+*.py[co]
+.tox/
+.zoo
+.env
+web.config
+/log
+__pycache__
+*.pid
+db.sqlite3
+*.code-workspace
