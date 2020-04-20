@@ -9,5 +9,9 @@ class CustomUser(AbstractUser):
         "Profile picture", upload_to="profile/%Y/%m/%d"
     )
     birthday = models.DateField("Birthday", blank=True, null=True)
-    twitter = LowerCharField("Twitter Account", blank=True, null=True)
-    linkedin = LowerCharField("LinkedIn Account", blank=True, null=True)
+    twitter = LowerCharField(
+        "Twitter Account", blank=True, null=True, max_length=120
+    )
+    linkedin = LowerCharField(
+        "LinkedIn Account", blank=True, null=True, max_length=120
+    )
