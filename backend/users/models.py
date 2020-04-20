@@ -5,6 +5,11 @@ from core.custom.model_fields import LowerCharField
 
 
 class CustomUser(AbstractUser):
+    GENDER = [
+        ("F", "Female"),
+        ("M", "Male"),
+        ("P", "Private"),
+    ]
     profile_picture = models.ImageField(
         "Profile picture", upload_to="profile/%Y/%m/%d"
     )
@@ -15,3 +20,4 @@ class CustomUser(AbstractUser):
     linkedin = LowerCharField(
         "LinkedIn Account", blank=True, null=True, max_length=120
     )
+    gender = models.CharField("Gender", choices=GENDER, max_length=1)
