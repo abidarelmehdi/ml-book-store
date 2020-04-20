@@ -3,7 +3,7 @@ from core.custom.model_fields import TitleCharField
 
 
 class Category(CoreModel):
-    label = TitleCharField("Label", max_length=50)
+    label = TitleCharField("Label", max_length=50, unique=True)
 
     class Meta:
         verbose_name = "Category"
