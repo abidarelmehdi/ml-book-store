@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from core.models import CoreModel
 from core.custom.model_fields import TitleCharField
+from category.models import Category
 
 
 class Book(CoreModel):
@@ -14,6 +15,7 @@ class Book(CoreModel):
     authors = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="books"
     )
+    categories = models.ManyToManyField(Category, related_name="books")
 
     class Meta:
         verbose_name = "Book"
