@@ -22,6 +22,9 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    # Libraries
+    "rest_framework",
+    # My Apps
     "django.contrib.staticfiles",
     "core.apps.CoreConfig",
     "users.apps.UsersConfig",
@@ -29,6 +32,12 @@ INSTALLED_APPS = [
     "book.apps.BookConfig",
 ]
 
+
+# DRF Configurations
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [],
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+}
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
