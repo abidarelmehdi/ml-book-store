@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../core/Logo";
 import NavLinks from "../core/NavLinks";
 import ProfileDropDown from "../core/ProfileDropDown";
+import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -51,7 +52,10 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
-            <button className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition duration-150 ease-in-out">
+            <NavLink
+              to="/books/add"
+              className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition duration-150 ease-in-out"
+            >
               <svg
                 fill="none"
                 stroke="currentColor"
@@ -63,7 +67,7 @@ export default function Navbar() {
               >
                 <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
               </svg>
-            </button>
+            </NavLink>
             <ProfileDropDown />
           </div>
         </div>
