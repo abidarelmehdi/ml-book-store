@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "core.apps.CoreConfig",
     "users.apps.UsersConfig",
     "category.apps.CategoryConfig",
+    "author.apps.AuthorConfig",
     "book.apps.BookConfig",
 ]
 

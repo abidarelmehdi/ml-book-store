@@ -1,20 +1,18 @@
 from django.db import models
-from django.conf import settings
 from core.models import CoreModel
 from core.custom.model_fields import TitleCharField
+from author.models import Author
 from category.models import Category
 
 
 class Book(CoreModel):
     title = TitleCharField("Title", max_length=120)
-    description = models.TextField("Description")
+    description = models.TextField("Description", null=True, blank=True)
     thumbnail = models.ImageField(
         "Thumbnail", upload_to="thumbnails/%Y/%m/%d", null=True, blank=True
     )
     book = models.FileField("File", upload_to="books/%Y/%m/%d")
-    authors = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name="books"
-    )
+    authors = models.ManyToManyField(Author, related_name="books")
     categories = models.ManyToManyField(Category, related_name="books")
 
     class Meta:
