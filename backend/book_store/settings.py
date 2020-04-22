@@ -14,6 +14,7 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
 AUTH_USER_MODEL = "users.CustomUser"
 
+CORS_ORIGIN_WHITELIST = config("CORS_ORIGIN_WHITELIST", cast=Csv())
 
 # Application definition
 
@@ -25,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     # Libraries
     "rest_framework",
+    "corsheaders",
     # My Apps
     "django.contrib.staticfiles",
     "core.apps.CoreConfig",
@@ -59,6 +61,7 @@ SIMPLE_JWT = {
     "TOKEN_TYPE_CLAIM": "token_type",
 }
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
