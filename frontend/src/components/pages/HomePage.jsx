@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as bookActions from "../../redux/actions/bookActions";
+import BooksList from "../books/BooksList";
 
 function Home({ setTitle, books, loadBooks }) {
   useEffect(() => {
     setTitle("Home Page");
     books.length === 0 && loadBooks();
   }, [books.length, loadBooks, setTitle]);
-  return <></>;
+  return <BooksList books={books} />;
 }
 
 function mapStateToProps(state) {

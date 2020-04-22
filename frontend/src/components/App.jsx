@@ -20,7 +20,7 @@ export default function App() {
           </header>
         )}
         <main>
-          <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <div className="mx-auto sm:px-6 lg:px-8">
             <Switch>
               <Route
                 exact
