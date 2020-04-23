@@ -10322,6 +10322,14 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
+tailwindcss-rtl@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/tailwindcss-rtl/-/tailwindcss-rtl-0.2.1.tgz#b1633b937d4ee25224352ce12d578d49f2642c68"
+  integrity sha512-p8PwM+4wBDza+HckLWWhy6pQtjy1mAnlELI8ftImlW4vehfn+uWQ9QiH5TVPWcLe/IuddA4kQZHQfrGQ8wpTRA==
+  dependencies:
+    lodash "^4.17.15"
+    tailwindcss "^1.2.0"
+
 tailwindcss@^1.2.0:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.3.3.tgz#f2c1f2f22dcf14a0c701355d46c159ccd4db2573"

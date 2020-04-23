@@ -2,7 +2,10 @@ import React from "react";
 
 export default function BookItem({ book }) {
   return (
-    <div className="bg-white flex flex-col rounded-lg shadow-lg overflow-hidden">
+    <div
+      dir={book.language === "ar" ? "rtl" : ""}
+      className="bg-white flex flex-col rounded-lg shadow-lg overflow-hidden"
+    >
       <div className="flex-shrink-0">
         <img
           className="h-56 w-full object-contain"
@@ -32,7 +35,7 @@ export default function BookItem({ book }) {
                 alt={author.first_name + " " + author.last_name}
               />
             </div>
-            <div className="ml-3">
+            <div className={book.language === "ar" ? "mr-3" : "ml-3"}>
               <p className="text-sm leading-5 font-medium text-gray-900">
                 <span className="hover:underline">
                   {author.first_name + " " + author.last_name}
