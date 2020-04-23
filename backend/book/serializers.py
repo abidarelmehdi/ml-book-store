@@ -16,6 +16,7 @@ class BookSerializer(serializers.ModelSerializer):
             "description",
             "thumbnail",
             "book",
+            "language",
             "authors",
             "categories",
         )

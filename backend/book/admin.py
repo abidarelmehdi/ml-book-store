@@ -9,6 +9,7 @@ class BookAdmin(admin.ModelAdmin):
         "description",
         "thumbnail",
         "book",
+        "language",
         "authors",
         "categories",
     )
