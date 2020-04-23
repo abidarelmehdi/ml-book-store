@@ -8,7 +8,7 @@ export default function BookItem({ book }) {
     >
       <div className="flex-shrink-0">
         <img
-          className="h-56 w-full object-contain"
+          className="h-64 w-full object-cover object-top"
           src={book.thumbnail}
           alt={book.title}
         />
