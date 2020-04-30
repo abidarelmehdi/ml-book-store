@@ -6,9 +6,10 @@ from book.models import Book
 class BookAdmin(admin.ModelAdmin):
     fields = (
         "title",
+        "subtitle",
+        "isbn",
         "description",
         "thumbnail",
-        "book",
         "language",
         "authors",
         "categories",

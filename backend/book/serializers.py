@@ -13,9 +13,10 @@ class BookSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "title",
+            "subtitle",
+            "isbn",
             "description",
             "thumbnail",
-            "book",
             "language",
             "authors",
             "categories",
