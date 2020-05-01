@@ -1,23 +1,16 @@
-from django.db import transaction
-from django.http import HttpResponse
-from django.contrib.auth import get_user_model
-from django.contrib.auth.hashers import make_password
-import re
-import json
-from concurrent import futures
-import pandas as pd
-from book.models import Book
-from author.models import Author
-from category.models import Category
-import numpy as np
-from faker import Faker
-import asyncio
-
-# def parallelize_dataframe(df, func, n_cores=1):
-#     df_split = np.array_split(df, n_cores)
-#     with multiprocessing.Pool(n_cores) as p:
-#         df = pd.concat(p.map(func, df_split))
-
+# from django.db import transaction
+# from django.http import HttpResponse
+# from django.contrib.auth import get_user_model
+# from django.contrib.auth.hashers import make_password
+# import json
+# from concurrent import futures
+# import pandas as pd
+# from book.models import Book, UserRatings
+# from author.models import Author
+# from category.models import Category
+# import numpy as np
+# from faker import Faker
+# import asyncio
 
 # def add_book(df):
 #     print(f"start adding...")
@@ -64,12 +57,20 @@ import asyncio
 #     return df
 
 
-@transaction.atomic
-def load_data(request):
-    # df = pd.read_excel("books.xlsx", dtype={"isbn": np.str})
-    # df = df.replace({np.nan: None})
-    # add_book(df)
-    return HttpResponse("Good")
+# @transaction.atomic
+# def load_data(request):
+#     with open("rates.json", encoding="utf-8") as F:
+#         json_data = json.loads(F.read())
+
+#     print("Start building users.")
+#     rates = []
+#     for rate in json_data:
+#         rates.append(UserRatings(**rate))
+
+#     print("Saving to database.")
+#     UserRatings.objects.bulk_create(rates)
+
+#     return HttpResponse("Good")
 
 
 # @transaction.atomic

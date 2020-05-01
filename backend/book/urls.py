@@ -9,6 +9,6 @@ router.register("", BookViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("load_data", views.load_data, name="load_data")
+    # path("load_data", views.load_data, name="load_data")
     # path('', include('django.contrib.auth.urls'))
 ]

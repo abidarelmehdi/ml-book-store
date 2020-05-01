@@ -14,7 +14,7 @@ class Book(CoreModel):
     publisher = TitleCharField(
         "Publisher", max_length=250, null=True, blank=True
     )
-    isbn = UpperCharField("ISBN", max_length=30)
+    isbn = UpperCharField("ISBN", max_length=30, unique=True)
     pages = models.SmallIntegerField("Pages", null=True, blank=True)
     description = models.TextField("Description", null=True, blank=True)
     thumbnail = models.URLField(
@@ -41,7 +41,10 @@ class Book(CoreModel):
 
 class UserRatings(models.Model):
     book = models.ForeignKey(
-        Book, related_name="user_ratings", on_delete=models.CASCADE
+        Book,
+        related_name="user_ratings",
+        to_field="isbn",
+        on_delete=models.CASCADE,
     )
     user = models.ForeignKey(
         User, related_name="user_ratings", on_delete=models.CASCADE
