@@ -64,12 +64,12 @@ import asyncio
 #     return df
 
 
-# @transaction.atomic
-# def load_data(request):
-#     df = pd.read_excel("books.xlsx", dtype={"isbn": np.str})
-#     df = df.replace({np.nan: None})
-#     add_book(df)
-#     return HttpResponse("Good")
+@transaction.atomic
+def load_data(request):
+    # df = pd.read_excel("books.xlsx", dtype={"isbn": np.str})
+    # df = df.replace({np.nan: None})
+    # add_book(df)
+    return HttpResponse("Good")
 
 
 # @transaction.atomic

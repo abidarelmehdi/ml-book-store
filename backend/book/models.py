@@ -1,9 +1,11 @@
 from django.db import models
-from langdetect import detect
+from django.contrib.auth import get_user_model
 from core.models import CoreModel
 from core.custom.model_fields import TitleCharField, UpperCharField
 from author.models import Author
 from category.models import Category
+
+User = get_user_model()
 
 
 class Book(CoreModel):
@@ -20,6 +22,9 @@ class Book(CoreModel):
     )
     authors = models.ManyToManyField(Author, related_name="books")
     categories = models.ManyToManyField(Category, related_name="books")
+    ratings = models.ManyToManyField(
+        User, through="UserRatings", related_name="books"
+    )
     language = models.CharField("Language", max_length=10, default="en")
 
     class Meta:
@@ -32,3 +37,13 @@ class Book(CoreModel):
     # def save(self, *args, **kwargs):
     #     self.language = self.title and detect(self.title)
     #     return super().save(*args, **kwargs)
+
+
+class UserRatings(models.Model):
+    book = models.ForeignKey(
+        Book, related_name="user_ratings", on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        User, related_name="user_ratings", on_delete=models.CASCADE
+    )
+    rate = models.SmallIntegerField("Rate")
