@@ -4,7 +4,7 @@ from core.custom.model_fields import LowerCharField
 
 
 class Author(CoreModel):
-    name = LowerCharField("Name", max_length=120)
+    name = LowerCharField("Name", max_length=250)
     bio = models.TextField("Biography", null=True, blank=True)
 
     class Meta:

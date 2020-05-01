@@ -8,15 +8,19 @@ from category.models import Category
 
 class Book(CoreModel):
     title = TitleCharField("Title", max_length=250)
-    subtitle = TitleCharField("Sub-Title", max_length=250)
+    subtitle = models.TextField("Sub-Title", null=True, blank=True)
+    publisher = TitleCharField(
+        "Publisher", max_length=250, null=True, blank=True
+    )
     isbn = UpperCharField("ISBN", max_length=30)
+    pages = models.SmallIntegerField("Pages", null=True, blank=True)
     description = models.TextField("Description", null=True, blank=True)
-    thumbnail = models.ImageField(
-        "Thumbnail", upload_to="thumbnails/%Y/%m/%d", null=True, blank=True
+    thumbnail = models.URLField(
+        "Thumbnail", max_length=250, null=True, blank=True
     )
     authors = models.ManyToManyField(Author, related_name="books")
     categories = models.ManyToManyField(Category, related_name="books")
-    language = models.CharField("Language", max_length=2, default="en")
+    language = models.CharField("Language", max_length=10, default="en")
 
     class Meta:
         verbose_name = "Book"
@@ -25,6 +29,6 @@ class Book(CoreModel):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        self.language = self.title and detect(self.title)
-        return super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.language = self.title and detect(self.title)
+    #     return super().save(*args, **kwargs)
