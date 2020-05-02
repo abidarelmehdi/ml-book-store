@@ -32,6 +32,7 @@ class Book(CoreModel):
     class Meta:
         verbose_name = "Book"
         verbose_name_plural = "Books"
+        ordering = ["-raters"]
 
     def __str__(self):
         return self.title

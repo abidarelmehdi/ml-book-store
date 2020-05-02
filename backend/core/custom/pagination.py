@@ -8,4 +8,4 @@ class LargeResultsSetPagination(PageNumberPagination):
 
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 5
+    page_size = 100

@@ -16,7 +16,7 @@ export function loadBooks() {
     return bookApi
       .getBooks()
       .then((books) => {
-        dispatch(loadBooksSuccess(books.data));
+        dispatch(loadBooksSuccess(books.data.results));
       })
       .catch((error) => {
         throw error;
