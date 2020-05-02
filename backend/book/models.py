@@ -25,6 +25,8 @@ class Book(CoreModel):
     ratings = models.ManyToManyField(
         User, through="UserRatings", related_name="books"
     )
+    avg_ratings = models.SmallIntegerField("Rating", default=0)
+    raters = models.BigIntegerField("Raters", default=0)
     language = models.CharField("Language", max_length=10, default="en")
 
     class Meta:
