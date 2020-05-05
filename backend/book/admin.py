@@ -13,6 +13,7 @@ class BookAdmin(admin.ModelAdmin):
         "pages",
         "language",
         "avg_ratings",
+        "categories_as_text",
     ]
     search_fields = [
         "id",

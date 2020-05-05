@@ -37,6 +37,12 @@ class Book(CoreModel):
     def __str__(self):
         return self.title
 
+    def categories_as_text(self):
+        return " | ".join(self.categories.values_list("label", flat=True))
+
+    def authors_as_text(self):
+        return " | ".join(self.authors.values_list("label", flat=True))
+
     # def save(self, *args, **kwargs):
     #     self.language = self.title and detect(self.title)
     #     return super().save(*args, **kwargs)

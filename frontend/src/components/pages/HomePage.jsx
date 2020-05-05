@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 import * as bookActions from "../../redux/actions/bookActions";
 import BooksList from "../books/BooksList";
 
-function Home({ setTitle, books, loadBooks }) {
+function Home({ books, loadBooks }) {
   useEffect(() => {
-    setTitle("Home Page");
     books.length === 0 && loadBooks();
-  }, [books.length, loadBooks, setTitle]);
+  }, [books.length, loadBooks]);
   return <BooksList books={books} />;
 }
 

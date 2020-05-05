@@ -18,6 +18,7 @@ class BookSerializer(serializers.ModelSerializer):
             "description",
             "thumbnail",
             "language",
+            "avg_ratings",
             "raters",
             "authors",
             "categories",
