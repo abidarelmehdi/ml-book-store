@@ -1,16 +1,28 @@
-# from django.db import transaction
-# from django.http import HttpResponse
+from django.db import transaction
+from django.http import HttpResponse
+from django.db.models import F, IntegerField, Count
+from django.db.models.functions import Substr, Length
+from core.custom.model_fields import TitleCharField
+
 # from django.contrib.auth import get_user_model
 # from django.contrib.auth.hashers import make_password
 # import json
 # from concurrent import futures
-# import pandas as pd
-# from book.models import Book, UserRatings
+import pandas as pd
+from book.models import Book
+
 # from author.models import Author
-# from category.models import Category
+from category.models import Category
+
 # import numpy as np
 # from faker import Faker
 # import asyncio
+
+
+@transaction.atomic
+def load_data(request):
+    return HttpResponse("Good")
+
 
 # def add_book(df):
 #     print(f"start adding...")
@@ -59,17 +71,50 @@
 
 # @transaction.atomic
 # def load_data(request):
-#     with open("rates.json", encoding="utf-8") as F:
-#         json_data = json.loads(F.read())
+#     spliter = "&"
+#     books = (
+#         Book.objects.annotate(num_categories=Count("categories"))
+#         .filter(num_categories__gt=0)
+#         .prefetch_related("categories")
+#         .filter(categories__label__endswith=")")
+#     )
 
-#     print("Start building users.")
-#     rates = []
-#     for rate in json_data:
-#         rates.append(UserRatings(**rate))
+#     # for book in books:
+#     #     for categ in book.categories.all():
+#     #         categs = categ.label[:-1]
+#     #         categ_object = Category.objects.filter(label=categs).first()
+#     #         if categ_object:
+#     #             book.categories.add(categ_object)
+#     #             book.categories.remove(categ)
+#     #             book.save()
+#     #             print(f"Book {book.isbn} updated")
+#     print(books.count())
+#     return HttpResponse("Good")
 
-#     print("Saving to database.")
-#     UserRatings.objects.bulk_create(rates)
 
+# @transaction.atomic
+# def load_data(request):
+#     spliter = "&"
+#     books = (
+#         Book.objects.annotate(num_categories=Count("categories"))
+#         .filter(num_categories__gt=0)
+#         .prefetch_related("categories")
+#         .exclude(categories__label__contains="(")
+#         .filter(categories__label__endswith=")")
+#     )
+#     for book in books:
+#         for categ in book.categories.all():
+#             categs = categ.label.split(spliter)
+#             if len(categs) > 1:
+#                 for ct in categs:
+#                     new_categ, created = Category.objects.get_or_create(
+#                         label=ct.strip()
+#                     )
+#                     book.categories.add(new_categ)
+#                 book.categories.remove(categ)
+#                 book.save()
+#                 print(f"Book {book.isbn} updated")
+#     print(books.count())
 #     return HttpResponse("Good")
 
 
