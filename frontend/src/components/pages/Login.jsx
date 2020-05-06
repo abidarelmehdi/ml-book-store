@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../core/Logo";
+import * as userActions from "../../redux/actions/userActions";
+import { connect } from "react-redux";
 
-export default function Login() {
+function Login({ userLogin, loggedUser }) {
+  const [user, setUser] = useState({
+    username: "abidar.elmehdi",
+    password: "Pride1995",
+  });
+
+  const handleChange = ({ target }) => {
+    setUser({
+      ...user,
+      [target.name]: target.value,
+    });
+  };
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    userLogin({ ...user }).then((data) => {});
+  }
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center text-indigo-500">
           <Logo />
@@ -21,19 +39,20 @@ export default function Login() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form action="#" method="POST">
+          <form onSubmit={handleSubmit} method="POST">
             <div>
               <label
                 htmlFor="email"
                 className="block text-sm font-medium leading-5 text-gray-700"
               >
-                Email address
+                Username
               </label>
               <div className="mt-1 rounded-md shadow-sm">
                 <input
-                  id="email"
-                  type="email"
-                  required
+                  id="username"
+                  type="username"
+                  name="username"
+                  onChange={handleChange}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                 />
               </div>
@@ -50,7 +69,8 @@ export default function Login() {
                 <input
                   id="password"
                   type="password"
-                  required
+                  name="password"
+                  onChange={handleChange}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                 />
               </div>
@@ -149,3 +169,13 @@ export default function Login() {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    loggedUser: state.user,
+  };
+}
+const mapDispatchToProps = {
+  userLogin: userActions.login,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

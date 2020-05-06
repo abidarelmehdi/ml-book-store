@@ -19,7 +19,7 @@ export function loadBooks() {
         dispatch(loadBooksSuccess(books.data.results));
       })
       .catch((error) => {
-        throw error;
+        // throw error;
       });
   };
 }

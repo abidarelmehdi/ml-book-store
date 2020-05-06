@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Navbar from "./core/Navbar";
 import HomePage from "./pages/HomePage";
 import BookManage from "./pages/BookManage";
+import Login from "./pages/Login";
 
 export default function App() {
   const [title, setTitle] = useState("");
@@ -35,6 +36,7 @@ export default function App() {
                 )}
               />
               <Route exact path="/books/add" component={BookManage} />
+              <Route exact path="/login" component={Login} />
             </Switch>
           </div>
         </main>
