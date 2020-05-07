@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "book-store"
+version = "0.1.0"
+description = ""
+authors = ["abidarelmehdi"]
+
+[tool.poetry.dependencies]
+python = "3.8"
+Django = "^3.0.6"
+Faker = "^4.0.3"
+Pillow = "^7.1.2"
+pandas = "^1.0.3"
+django-cors-headers = "^3.2.1"
+django-currentuser = "^0.5.0"
+django-rest-auth = "^0.9.5"
+djangorestframework = "^3.11.0"
+psycopg2-binary = "^2.8.5"
+python-decouple = "^3.3"
+djangorestframework-simplejwt = "^4.4.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
