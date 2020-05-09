@@ -3,24 +3,17 @@ from django.http import HttpResponse
 from django.db.models import F, IntegerField, Count
 from django.db.models.functions import Substr, Length
 from core.custom.model_fields import TitleCharField
-
-# from django.contrib.auth import get_user_model
-# from django.contrib.auth.hashers import make_password
-# import json
-# from concurrent import futures
 import pandas as pd
 from book.models import Book
 
-# from author.models import Author
 from category.models import Category
 
-# import numpy as np
-# from faker import Faker
-# import asyncio
+from core.jobs import compute_cosine_sim
 
 
 @transaction.atomic
 def load_data(request):
+    data = compute_cosine_sim()
     return HttpResponse("Good")
 
 
