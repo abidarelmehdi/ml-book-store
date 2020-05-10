@@ -1,6 +1,7 @@
 import React from "react";
 import Truncate from "react-truncate";
 import BookStars from "./BookStars";
+import { Link } from "react-router-dom";
 export default function BookItem({ book }) {
   return (
     <div className="w-full bg-white flex flex-col justify-between rounded shadow p-4">
@@ -13,7 +14,9 @@ export default function BookItem({ book }) {
           />
         </div>
         <div className="ml-4 flex-auto">
-          <h3 className="leading-6 text-gray-800">{book.title}</h3>
+          <Link to={`books/${book.id}`}>
+            <h3 className="leading-6 text-gray-800">{book.title}</h3>
+          </Link>
           <p className="text-sm leading-5 text-gray-500">
             by
             <span className="ml-1">
