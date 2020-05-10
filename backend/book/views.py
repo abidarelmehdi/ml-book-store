@@ -1,19 +1,12 @@
 from django.db import transaction
 from django.http import HttpResponse
-from django.db.models import F, IntegerField, Count
-from django.db.models.functions import Substr, Length
-from core.custom.model_fields import TitleCharField
-import pandas as pd
-from book.models import Book
 
-from category.models import Category
-
-from core.jobs import compute_cosine_sim
+from core.ai_models.content_based import CosineSimilarityModel
 
 
 @transaction.atomic
 def load_data(request):
-    data = compute_cosine_sim()
+    model = CosineSimilarityModel(train=True)
     return HttpResponse("Good")
 
 
