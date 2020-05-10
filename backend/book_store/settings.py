@@ -110,6 +110,17 @@ DJANGO_REDIS_CONNECTION_FACTORY = "core.redis.ConnectionFactory"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/0",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "REDIS_CLIENT_CLASS": "redis.client.StrictRedis",
+            "REDIS_CLIENT_KWARGS": {"decode_responses": True},
+            # Custom serializer
+            "SERIALIZER": "core.redis.JSONSerializer",
+        },
+    },
+    "ai": {
+        "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
@@ -118,7 +129,7 @@ CACHES = {
             # Custom serializer
             "SERIALIZER": "core.redis.JSONSerializer",
         },
-    }
+    },
 }
 
 # Custom connection factory

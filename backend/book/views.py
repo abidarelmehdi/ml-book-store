@@ -1,14 +1,22 @@
 from django.db import transaction
-from django.http import HttpResponse
-
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import View
 from core.ai_models.content_based import CosineSimilarityModel
-
-import time
 
 
 @transaction.atomic
 def load_data(request):
     return HttpResponse("Good")
+
+
+class TrainContentBasedModel(View):
+    """
+        Simple view to trigger training of content-based model
+    """
+
+    def get(self, request):
+        CosineSimilarityModel(train=True)
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
 
 # def add_book(df):

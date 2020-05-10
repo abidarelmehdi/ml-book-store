@@ -14,7 +14,7 @@ class CosineSimilarityModel(object):
         of all books
     """
 
-    def __init__(self, database="default", train=False):
+    def __init__(self, database="ai", train=False):
         self.connection = get_redis_connection(database)
 
         # if train flag is True, the model will be trained during intanciation
