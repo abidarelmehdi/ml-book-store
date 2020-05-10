@@ -9,6 +9,13 @@ export function loadBooksSuccess(books = []) {
   };
 }
 
+export function getBookByIdSuccess(book = {}) {
+  return {
+    type: actionTypes.GET_BOOK_BY_ID_SUCCESS,
+    book,
+  };
+}
+
 // Thunks
 export function loadBooks() {
   return function (dispatch) {
@@ -17,6 +24,20 @@ export function loadBooks() {
       .getBooks()
       .then((books) => {
         dispatch(loadBooksSuccess(books.data.results));
+      })
+      .catch((error) => {
+        // throw error;
+      });
+  };
+}
+
+export function getBookById(id) {
+  return function (dispatch) {
+    dispatch(startApiCall());
+    return bookApi
+      .getBookbyId(id)
+      .then((book) => {
+        dispatch(getBookByIdSuccess(book.data));
       })
       .catch((error) => {
         // throw error;

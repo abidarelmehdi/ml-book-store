@@ -4,3 +4,7 @@ import axios from "./axiosApi";
 export function getBooks() {
   return axios.get(baseUrl + "books/").catch((err) => console.log(err));
 }
+
+export function getBookbyId(id) {
+  return axios.get(`${baseUrl}books/${id}`).catch((err) => console.log(err));
+}
