@@ -1,5 +1,6 @@
 from django.contrib import admin
 from book.models import Book
+from book.admin_actions import train_content_based_model
 
 
 @admin.register(Book)
@@ -22,3 +23,4 @@ class BookAdmin(admin.ModelAdmin):
         "publisher",
         "isbn",
     ]
+    actions = [train_content_based_model]
