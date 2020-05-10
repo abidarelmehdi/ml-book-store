@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BookStarsRating from "./BookStarsRating";
 import BookStars from "./BookStars";
-import BookItem from "./BookItem";
+import SmallBookItem from "./SmallBookItem";
 import { Link } from "react-router-dom";
 import { getCoSinSimilarBooks } from "../../api/bookApi";
 
@@ -9,7 +9,6 @@ export default function BookDetailItem({ book }) {
   const [similarBooks, setSimilarBooks] = useState([]);
   useEffect(() => {
     getCoSinSimilarBooks(book.isbn).then((_books) => {
-      console.log(_books);
       setSimilarBooks(_books.data);
     });
   }, [book]);
@@ -68,10 +67,12 @@ export default function BookDetailItem({ book }) {
         </div>
       </div>
       <div className="mt-10">
-        <h4 className="text-xl font-medium text-gray-600">Similar Books</h4>
-        <div className="w-full flex">
+        <h4 className="text-xl font-medium text-gray-600">Similar books</h4>
+        <div className="mt-6 w-full flex overflow-x-auto">
           {similarBooks.map((book) => (
-            <BookItem book={book} />
+            <div key={book.id} className="mr-4">
+              <SmallBookItem book={book} />
+            </div>
           ))}
         </div>
       </div>
