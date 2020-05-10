@@ -107,4 +107,4 @@ class CosineSimilarityModel(object):
             self.connection.hmset(row["isbn"], similar_items)
 
     def predict(self, isbn):
-        return self.connection.hvals(isbn)
+        return self.connection.hgetall(isbn)

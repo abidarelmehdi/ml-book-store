@@ -3,10 +3,11 @@ from django.http import HttpResponse
 
 from core.ai_models.content_based import CosineSimilarityModel
 
+import time
+
 
 @transaction.atomic
 def load_data(request):
-    model = CosineSimilarityModel(train=True)
     return HttpResponse("Good")
 
 
