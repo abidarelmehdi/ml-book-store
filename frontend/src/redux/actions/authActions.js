@@ -1,11 +1,12 @@
 import * as userApi from "../../api/userApi";
 import actionTypes from "../actionTypes";
 import { startApiCall } from "./apiStatusActions";
+import axiosAPI from "../../api/axiosApi";
 
-export function loginSuccess(user = {}) {
+export function loginSuccess(auth = {}) {
   return {
     type: actionTypes.LOGIN_SUCCESS,
-    user,
+    auth,
   };
 }
 
@@ -15,11 +16,15 @@ export function login({ username, password }) {
     dispatch(startApiCall());
     return userApi
       .login(username, password)
-      .then((user) => {
+      .then((res) => {
+        axiosAPI.defaults.headers["Authorization"] = "JWT " + res.data.access;
+        localStorage.setItem("access_token", res.data.access);
+        localStorage.setItem("refresh_token", res.data.refresh);
         dispatch(
           loginSuccess({
-            username,
-            ...user.data,
+            access_token: res.data.access,
+            refresh_token: res.data.refresh,
+            is_authenticated: true,
           })
         );
       })

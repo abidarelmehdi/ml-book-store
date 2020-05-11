@@ -27,7 +27,7 @@ export default function BookDetailItem({ book }) {
             </div>
           </div>
           <div className="ml-4 flex-auto">
-            <Link to={`books/${book.id}`}>
+            <Link to={`/books/${book.id}`}>
               <h3 className="leading-6 text-2xl font-medium text-gray-800">
                 {book.title}
               </h3>

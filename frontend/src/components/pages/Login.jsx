@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Logo from "../core/Logo";
-import * as userActions from "../../redux/actions/userActions";
+import * as authActions from "../../redux/actions/authActions";
 import { connect } from "react-redux";
 
-function Login({ userLogin, loggedUser }) {
+function Login({ userLogin, loggedUser, history }) {
   const [user, setUser] = useState({
     username: "abidar.elmehdi",
     password: "Pride1995",
@@ -18,7 +18,9 @@ function Login({ userLogin, loggedUser }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    userLogin({ ...user }).then((data) => {});
+    userLogin({ ...user }).then((data) => {
+      history.push("/");
+    });
   }
   return (
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -176,6 +178,6 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = {
-  userLogin: userActions.login,
+  userLogin: authActions.login,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

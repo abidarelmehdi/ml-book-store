@@ -12,12 +12,11 @@ urlpatterns = [
     path(
         "token/obtain/",
         jwt_views.TokenObtainPairView.as_view(),
-        name="token_create",
+        name="token_obtain",
     ),
     path(
         "token/refresh/",
         jwt_views.TokenRefreshView.as_view(),
         name="token_refresh",
     ),
-    # path('', include('django.contrib.auth.urls'))
 ]
