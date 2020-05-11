@@ -32,17 +32,27 @@ export default function BookDetailItem({ book }) {
                 {book.title}
               </h3>
             </Link>
-            <p className="text-sm mt-4 text-gray-500">
-              Writed by
-              <span className="ml-1">
+            <div className="flex text-sm mt-6 text-gray-500">
+              writed by
+              <span className="ml-1 text-gray-700">
                 {book.authors
                   .map((author) => {
                     return author.name;
                   })
                   .join(", ")}
               </span>
+              <span className="mx-1">·</span>
+              published by
+              <span className="ml-1 text-gray-700">{book.publisher}</span>
+            </div>
+            <p className="text-sm mt-2 text-gray-500">
+              <span className="text-gray-700">{book.pages}</span> Pages in
+              <span className="ml-1 text-green-500">
+                {book.categories.map((category) => category.label).join(", ")}
+              </span>
             </p>
-            <div className="mt-2 flex items-center">
+            <p className="text-sm mt-2 text-gray-500">ISBN: {book.isbn}</p>
+            <div className="mt-6 flex items-center">
               <BookStars rating={book.avg_ratings} />
 
               <p className="ml-2 text-sm font-light text-gray-400">
@@ -56,14 +66,6 @@ export default function BookDetailItem({ book }) {
               </p>
             </div>
           </div>
-        </div>
-        <div className="mt-4 border-t border-gray-100">
-          <p className="mt-3 text-xs leading-5 text-gray-600">
-            in
-            <span className="ml-1">
-              {book.categories.map((category) => category.label).join(", ")}
-            </span>
-          </p>
         </div>
       </div>
       <div className="mt-10">

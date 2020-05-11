@@ -15,6 +15,8 @@ class BookSerializer(serializers.ModelSerializer):
             "title",
             "subtitle",
             "isbn",
+            "publisher",
+            "pages",
             "description",
             "thumbnail",
             "language",
