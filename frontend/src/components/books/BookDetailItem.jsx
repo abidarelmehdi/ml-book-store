@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BookStarsRating from "./BookStarsRating";
 import BookStars from "./BookStars";
-import SmallBookItem from "./SmallBookItem";
+import SuggestedBooks from "./SuggestedBooks";
 import { Link } from "react-router-dom";
 import { getCoSinSimilarBooks } from "../../api/bookApi";
 
@@ -69,14 +69,7 @@ export default function BookDetailItem({ book }) {
         </div>
       </div>
       <div className="mt-10">
-        <h4 className="text-xl font-medium text-gray-600">Similar books</h4>
-        <div className="mt-6 w-full flex overflow-x-auto">
-          {similarBooks.map((book) => (
-            <div key={book.id} className="mr-4">
-              <SmallBookItem book={book} />
-            </div>
-          ))}
-        </div>
+        <SuggestedBooks books={similarBooks} />
       </div>
     </>
   );
