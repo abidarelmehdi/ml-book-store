@@ -12,7 +12,7 @@ export default function SmallBookItem({ book }) {
         />
       </div>
       <div className="mt-4">
-        <Link to={`books/${book.id}`}>
+        <Link to={`/books/${book.id}`}>
           <h3 className="text-sm font-medium leading-5 text-blue-600">
             {book.title}
           </h3>
