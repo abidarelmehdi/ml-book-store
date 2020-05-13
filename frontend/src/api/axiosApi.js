@@ -15,33 +15,62 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     const originalRequest = error.config;
+
+    // Prevent infinite loops
+    if (
+      error.response.status === 401 &&
+      originalRequest.url === baseUrl + "token/refresh/"
+    ) {
+      window.location.href = "/login/";
+      return Promise.reject(error);
+    }
 
     if (
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
     ) {
-      const refresh_token = localStorage.getItem("refresh_token");
+      const refresh = localStorage.getItem("refresh_token");
 
-      return axiosInstance
-        .post("/token/refresh/", { refresh: refresh_token })
-        .then((response) => {
-          localStorage.setItem("access_token", response.data.access);
-          localStorage.setItem("refresh_token", response.data.refresh);
+      if (refresh) {
+        const tokenParts = JSON.parse(atob(refresh.split(".")[1]));
 
-          axiosInstance.defaults.headers["Authorization"] =
-            "JWT " + response.data.access;
-          originalRequest.headers["Authorization"] =
-            "JWT " + response.data.access;
+        // exp date in token is expressed in seconds, while now() returns milliseconds:
+        const now = Math.ceil(Date.now() / 1000);
 
-          return axiosInstance(originalRequest);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        if (tokenParts.exp > now) {
+          try {
+            const response = await axiosInstance.post("users/token/refresh/", {
+              refresh,
+            });
+            setNewHeaders(response);
+            originalRequest.headers["Authorization"] =
+              "JWT " + response.data.access;
+            return axiosInstance(originalRequest);
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          console.log("Refresh token is expired", tokenParts.exp, now);
+          window.location.href = "/login/";
+        }
+      } else {
+        console.log("Refresh token not available.");
+        window.location.href = "/login/";
+      }
     }
+
+    // specific error handling done elsewhere
     return Promise.reject(error);
   }
 );
+
+export function setNewHeaders(response) {
+  axiosInstance.defaults.headers["Authorization"] =
+    "JWT " + response.data.access;
+  localStorage.setItem("access_token", response.data.access);
+  localStorage.setItem("refresh_token", response.data.refresh);
+}
+
 export default axiosInstance;

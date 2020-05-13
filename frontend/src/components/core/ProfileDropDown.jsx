@@ -14,7 +14,7 @@ export default function ProfileDropDown() {
         <svg
           fill="currentColor"
           viewBox="0 0 20 20"
-          className="w-8 h-8 text-indigo-600 p-1"
+          className="w-8 h-8 text-gray-400 p-1"
         >
           <path
             fillRule="evenodd"

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from category.serializers import CategorySerializer
 from author.serializers import AuthorSerializer
-from book.models import Book
+from book.models import Book, UserRatings
 
 
 class BookSerializer(serializers.ModelSerializer):
@@ -25,3 +25,9 @@ class BookSerializer(serializers.ModelSerializer):
             "authors",
             "categories",
         )
+
+
+class UserRatingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserRatings
+        fields = ("id", "book", "user")
