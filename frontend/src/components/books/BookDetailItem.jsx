@@ -3,15 +3,19 @@ import BookStarsRating from "./BookStarsRating";
 import BookStars from "./BookStars";
 import SuggestedBooks from "./SuggestedBooks";
 import { Link } from "react-router-dom";
-import { getCoSinSimilarBooks } from "../../api/bookApi";
+import { getCoSinSimilarBooks, UserBookRating } from "../../api/bookApi";
 
 export default function BookDetailItem({ book }) {
   const [similarBooks, setSimilarBooks] = useState([]);
+  const [userRating, setUserRating] = useState(0);
+
   useEffect(() => {
     getCoSinSimilarBooks(book.isbn).then((_books) => {
       setSimilarBooks(_books.data);
     });
+    UserBookRating(book.isbn).then((data) => console.log(data));
   }, [book]);
+
   return (
     <>
       <div className="mt-20 w-full bg-white flex flex-col justify-between rounded shadow p-4">
@@ -23,7 +27,7 @@ export default function BookDetailItem({ book }) {
               alt={book.title}
             />
             <div className="mt-4 flex justify-center">
-              <BookStarsRating />
+              <BookStarsRating book={book} />
             </div>
           </div>
           <div className="ml-4 flex-auto">
