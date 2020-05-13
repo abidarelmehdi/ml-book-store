@@ -15,14 +15,16 @@ export default function App() {
         <main>
           <div className="mx-auto sm:px-6 lg:px-8">
             <Switch>
-              <PrivateRoute exact path="/" component={HomePage} />
               <PrivateRoute exact path="/books/add" component={BookManage} />
+              <PrivateRoute exact path="/books" component={HomePage} />
               <PrivateRoute
                 exact
                 path="/books/:id"
                 component={BookDetailPage}
               />
               <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/" component={HomePage} />
+              <PrivateRoute path="/books" component={HomePage} />
             </Switch>
           </div>
         </main>

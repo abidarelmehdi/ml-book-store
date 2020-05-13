@@ -1,17 +1,20 @@
+from rest_framework import filters
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from core.custom.pagination import StandardResultsSetPagination
+from core.ai_models.content_based import CosineSimilarityModel
 from book.models import Book, UserRatings
 from book.serializers import BookSerializer, UserRatingsSerializer
-from core.ai_models.content_based import CosineSimilarityModel
 
 
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     pagination_class = StandardResultsSetPagination
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["title", "authors__name"]
 
 
 class RecommendedBooksListView(ListAPIView):
