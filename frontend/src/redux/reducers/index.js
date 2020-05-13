@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import books from "./bookReducers";
-import auth from "./authReducers";
+import user from "./userReducers";
 import apiStatus from "./apiStatusReducers";
 
 const rootReducer = combineReducers({
   books,
   apiStatus,
-  auth,
+  user,
 });
 
 export default rootReducer;

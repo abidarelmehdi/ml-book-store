@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../core/Logo";
-import * as authActions from "../../redux/actions/authActions";
+import * as userActions from "../../redux/actions/userActions";
 import { connect } from "react-redux";
 
 function Login({ userLogin, loggedUser, history }) {
@@ -178,6 +178,6 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = {
-  userLogin: authActions.login,
+  userLogin: userActions.login,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
