@@ -1,8 +1,10 @@
 import { baseUrl } from "./baseUrl";
 import axios from "./axiosApi";
 
-export function getBooks() {
-  return axios.get(baseUrl + "books/").catch((err) => console.log(err));
+export function getBooks(querySTring = "") {
+  return axios
+    .get(baseUrl + "books/" + querySTring)
+    .catch((err) => console.log(err));
 }
 
 export function getBookbyId(id) {

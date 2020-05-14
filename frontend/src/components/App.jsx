@@ -24,7 +24,6 @@ export default function App() {
               />
               <Route exact path="/login" component={Login} />
               <PrivateRoute exact path="/" component={HomePage} />
-              <PrivateRoute path="/books" component={HomePage} />
             </Switch>
           </div>
         </main>

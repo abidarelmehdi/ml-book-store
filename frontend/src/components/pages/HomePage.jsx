@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as bookActions from "../../redux/actions/bookActions";
 import BooksList from "../books/BooksList";
+import { getParamFromUrl } from "../../common/functions";
 
-function Home({ books, loadBooks }) {
+function Home({ books, loadBooks, history }) {
   useEffect(() => {
-    books.length === 0 && loadBooks();
-  }, [books.length, loadBooks]);
+    const queryString = history.location.search;
+    loadBooks(queryString);
+  }, [loadBooks, history.location.search]);
   return <BooksList books={books} />;
 }
 

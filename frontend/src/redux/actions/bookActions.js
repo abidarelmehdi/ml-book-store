@@ -2,7 +2,7 @@ import * as bookApi from "../../api/bookApi";
 import actionTypes from "../actionTypes";
 import { startApiCall } from "./apiStatusActions";
 
-export function loadBooksSuccess(books = []) {
+export function loadBooksSuccess(books = {}) {
   return {
     type: actionTypes.LOAD_BOOKS_SUCCESS,
     books,
@@ -17,13 +17,13 @@ export function getBookByIdSuccess(book = {}) {
 }
 
 // Thunks
-export function loadBooks() {
+export function loadBooks(querySTring) {
   return function (dispatch) {
     dispatch(startApiCall());
     return bookApi
-      .getBooks()
-      .then((books) => {
-        dispatch(loadBooksSuccess(books.data.results));
+      .getBooks(querySTring)
+      .then((res) => {
+        dispatch(loadBooksSuccess(res.data));
       })
       .catch((error) => {
         // throw error;
