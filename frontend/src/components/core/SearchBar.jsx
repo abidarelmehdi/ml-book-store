@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 
-export default function SearchBar() {
+function SearchBar({ history }) {
   const [query, setQuery] = useState("");
 
   const handleChange = ({ target }) => {
@@ -9,7 +10,7 @@ export default function SearchBar() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(query);
+    history.push(`/?search=${query}`);
   }
   return (
     <>
@@ -43,3 +44,5 @@ export default function SearchBar() {
     </>
   );
 }
+
+export default withRouter(SearchBar);
