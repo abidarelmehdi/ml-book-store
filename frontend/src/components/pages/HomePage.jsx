@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as bookActions from "../../redux/actions/bookActions";
 import BooksList from "../books/BooksList";
-import { getParamFromUrl } from "../../common/functions";
 
 function Home({ books, loadBooks, history }) {
   useEffect(() => {
