@@ -21,3 +21,6 @@ class CustomUser(AbstractUser):
         "LinkedIn Account", blank=True, null=True, max_length=120
     )
     gender = models.CharField("Gender", choices=GENDER, max_length=1)
+
+    class Meta:
+        indexes = [models.Index(fields=["id"])]

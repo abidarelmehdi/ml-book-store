@@ -59,3 +59,6 @@ class UserRatings(models.Model):
         User, related_name="user_ratings", on_delete=models.CASCADE
     )
     rate = models.SmallIntegerField("Rate")
+
+    class Meta:
+        indexes = [models.Index(fields=["user_id"])]
