@@ -28,6 +28,8 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class UserRatingsSerializer(serializers.ModelSerializer):
+    book = BookSerializer(read_only=True)
+
     class Meta:
         model = UserRatings
         fields = ("id", "book", "user", "rate")

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as ratedBooksActions from "../../redux/actions/ratedBooksActions";
-import BooksList from "../books/BooksList";
+import RatedBooksList from "../books/RatedBooksList";
 
 function UserRatedBooksPage({ ratedBooks, loadRatedBooks }) {
   useEffect(() => {
     loadRatedBooks();
   }, [loadRatedBooks]);
-  return <></>;
+  return <RatedBooksList ratedBooks={ratedBooks} />;
 }
 
 function mapStateToProps(state) {
