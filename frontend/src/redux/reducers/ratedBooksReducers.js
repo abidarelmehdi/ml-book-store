@@ -9,8 +9,8 @@ const initiateState = {
 
 export default function bookReducers(state = initiateState, action) {
   switch (action.type) {
-    case actionTypes.LOAD_BOOKS_SUCCESS:
-      return action.books;
+    case actionTypes.LOAD_RATED_BOOKS_SUCCESS:
+      return action.ratedBooks;
 
     default:
       return state;

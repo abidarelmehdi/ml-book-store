@@ -5,7 +5,6 @@ import BooksList from "../books/BooksList";
 
 function Home({ books, loadBooks, history }) {
   useEffect(() => {
-    console.log("been here");
     const queryString = history.location.search;
     loadBooks(queryString);
   }, [loadBooks, history.location.search]);
