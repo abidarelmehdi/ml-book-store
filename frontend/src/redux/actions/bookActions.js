@@ -9,6 +9,13 @@ export function loadBooksSuccess(books = {}) {
   };
 }
 
+export function loadRatedBooksSuccess(books = {}) {
+  return {
+    type: actionTypes.LOAD_RATED_BOOKS_SUCCESS,
+    books,
+  };
+}
+
 export function getBookByIdSuccess(book = {}) {
   return {
     type: actionTypes.GET_BOOK_BY_ID_SUCCESS,
@@ -26,7 +33,21 @@ export function loadBooks(querySTring) {
         dispatch(loadBooksSuccess(res.data));
       })
       .catch((error) => {
-        // throw error;
+        throw error;
+      });
+  };
+}
+
+export function loadRatedBooks() {
+  return function (dispatch) {
+    dispatch(startApiCall());
+    return bookApi
+      .getUserRatedBooks()
+      .then((res) => {
+        dispatch(loadRatedBooksSuccess(res.data));
+      })
+      .catch((error) => {
+        throw error;
       });
   };
 }

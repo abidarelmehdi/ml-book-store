@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Navbar from "./core/Navbar";
 import HomePage from "./pages/HomePage";
+import UserRatedBooksPage from "./pages/UserRatedBooksPage";
 import BookManage from "./pages/BookManage";
 import BookDetailPage from "./pages/BookDetailPage";
 import Login from "./pages/Login";
@@ -16,6 +17,11 @@ export default function App() {
           <div className="mx-auto sm:px-6 lg:px-8">
             <Switch>
               <PrivateRoute exact path="/books/add" component={BookManage} />
+              <PrivateRoute
+                exact
+                path="/books/user/rated"
+                component={UserRatedBooksPage}
+              />
               <PrivateRoute exact path="/books" component={HomePage} />
               <PrivateRoute
                 exact

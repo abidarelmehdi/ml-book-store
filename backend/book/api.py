@@ -37,6 +37,7 @@ class RecommendedBooksListView(ListAPIView):
 
 class UserRatedBookListView(ListAPIView):
     serializer_class = UserRatingsSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         current_user = self.request.user

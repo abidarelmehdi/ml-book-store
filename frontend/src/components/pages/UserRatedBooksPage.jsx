@@ -3,13 +3,11 @@ import { connect } from "react-redux";
 import * as bookActions from "../../redux/actions/bookActions";
 import BooksList from "../books/BooksList";
 
-function Home({ books, loadBooks, history }) {
+function UserRatedBooksPage({ books, loadBooks }) {
   useEffect(() => {
-    console.log("been here");
-    const queryString = history.location.search;
-    loadBooks(queryString);
-  }, [loadBooks, history.location.search]);
-  return <BooksList books={books} />;
+    loadBooks();
+  }, [loadBooks]);
+  return <></>;
 }
 
 function mapStateToProps(state) {
@@ -20,6 +18,6 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  loadBooks: bookActions.loadBooks,
+  loadBooks: bookActions.loadRatedBooks,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(UserRatedBooksPage);
