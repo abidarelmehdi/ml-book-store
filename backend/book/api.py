@@ -35,6 +35,14 @@ class RecommendedBooksListView(ListAPIView):
         return recommended_books
 
 
+class UserRatedBookListView(ListAPIView):
+    serializer_class = UserRatingsSerializer
+
+    def get_queryset(self):
+        current_user = self.request.user
+        return current_user.user_ratings.all()
+
+
 class BookRatings(APIView):
     def post(self, request):
         isbn = request.data.get("isbn")

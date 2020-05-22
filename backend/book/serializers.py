@@ -30,4 +30,4 @@ class BookSerializer(serializers.ModelSerializer):
 class UserRatingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserRatings
-        fields = ("id", "book", "user")
+        fields = ("id", "book", "user", "rate")
