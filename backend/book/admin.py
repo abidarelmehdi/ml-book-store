@@ -23,4 +23,5 @@ class BookAdmin(admin.ModelAdmin):
         "publisher",
         "isbn",
     ]
+    autocomplete_fields = ["categories", "authors"]
     change_list_template = "book/admin/change_list.html"
