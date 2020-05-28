@@ -3,7 +3,12 @@ import BookStarsRating from "./BookStarsRating";
 import BookStars from "./BookStars";
 import { Link } from "react-router-dom";
 
-export default function BookDetailItem({ book, userRating, starClick }) {
+export default function BookDetailItem({
+  book,
+  userRating,
+  starClick,
+  unrateClick,
+}) {
   return (
     <>
       <div className="mt-20 w-full bg-white flex flex-col justify-between rounded shadow p-4">
@@ -15,7 +20,11 @@ export default function BookDetailItem({ book, userRating, starClick }) {
               alt={book.title}
             />
             <div className="mt-4 flex justify-center">
-              <BookStarsRating userRating={userRating} starClick={starClick} />
+              <BookStarsRating
+                userRating={userRating}
+                starClick={starClick}
+                unrateClick={unrateClick}
+              />
             </div>
           </div>
           <div className="ml-4 flex-auto">

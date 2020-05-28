@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getBookbyId, rateBook } from "../../api/bookApi";
+import { getBookbyId, rateBook, unrateBook } from "../../api/bookApi";
 import BookDetailItem from "../books/BookDetailItem";
 import SuggestedBooks from "../books/SuggestedBooks";
 import { getCoSinSimilarBooks, UserBookRating } from "../../api/bookApi";
@@ -20,12 +20,14 @@ function BookDetailPage({ match }) {
     });
 
     UserBookRating(book.isbn).then((res) => setUserRating(res.data));
-  }, [book.isbn, match.params.id]);
+  }, [book.isbn, book.raters, match.params.id]);
 
   function handleStarClick(rate) {
-    rateBook(book.isbn, rate).then((res) => {
-      setUserRating(rate);
-    });
+    rateBook(book.isbn, rate).then((_book) => setBook(_book.data));
+  }
+
+  function handleUnrateClick() {
+    unrateBook(book.isbn).then((_book) => setBook(_book.data));
   }
 
   return (
@@ -34,6 +36,7 @@ function BookDetailPage({ match }) {
         book={book}
         userRating={userRating}
         starClick={handleStarClick}
+        unrateClick={handleUnrateClick}
       />
       <div className="mt-10">
         <SuggestedBooks books={similarBooks} />
