@@ -1,0 +1,22 @@
+POST http://localhost:8000/api/users/token/obtain/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "abidar.elmehdi",
+    "password": "Pride1995"
+}
+
+###
+
+GET http://localhost:8000/api/books/ HTTP/1.1
+Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkwNjczMjU3LCJqdGkiOiJjYTViNDk0OTVjMmM0NzE5OGEyNDY2MGYyYjA5NmRmZSIsInVzZXJfaWQiOjF9.V6_ZoZ6zXP39RcZx4FYxI_UC6ydRhs3FWiJF6kwqEMs
+
+###
+
+DELETE http://localhost:8000/api/books/rating HTTP/1.1
+Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkwNzExNjkzLCJqdGkiOiI2ZTZkYzAwNjFlZWM0NjExOTA3MTVmZjdiNTBhNzIxZiIsInVzZXJfaWQiOjF9.CCFPwZjSyLFbQD5XhaeRfpTfD5g7Qxo0y9qKTEXMHsk
+Content-Type: application/json
+
+{
+    "isbn": "0971880107"
+}

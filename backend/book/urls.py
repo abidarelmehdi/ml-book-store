@@ -26,6 +26,7 @@ urlpatterns = [
         views.TrainContentBasedModel.as_view(),
         name="content_based_training",
     ),
+    path("refresh", views.RefreshBooks.as_view(), name="refresh_books",),
     path("load_data", views.load_data, name="load_data")
     # path('', include('django.contrib.auth.urls'))
 ]

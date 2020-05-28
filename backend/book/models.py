@@ -67,6 +67,19 @@ class UserRatings(models.Model):
             # Update number of raters in book when user rate a book
             self.book.raters = self.book.user_ratings.count()
             self.book.avg_ratings = floor(
-                self.book.user_ratings.aggregate(models.Avg("rate"))
+                self.book.user_ratings.aggregate(models.Avg("rate")).get(
+                    "rate__avg"
+                )
             )
             self.book.save()
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        # Update number of raters and rate average in book when user rate a book
+        self.book.raters = self.book.user_ratings.count()
+        self.book.avg_ratings = floor(
+            self.book.user_ratings.aggregate(models.Avg("rate")).get(
+                "rate__avg"
+            )
+        )
+        self.book.save()

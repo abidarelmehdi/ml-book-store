@@ -54,6 +54,13 @@ class BookRatings(APIView):
         serialized_book = BookSerializer(rating.book).data
         return Response(serialized_book)
 
+    def delete(self, request):
+        isbn = request.data.get("isbn")
+        rating = UserRatings.objects.get(book_id=isbn, user_id=request.user.id)
+        rating.delete()
+        serialized_book = BookSerializer(rating.book).data
+        return Response(serialized_book)
+
     def get(self, request, isbn):
         rating = UserRatings.objects.filter(
             user=request.user, book_id=isbn
