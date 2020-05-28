@@ -17,6 +17,12 @@ export function rateBook(isbn, rate) {
     .catch((err) => console.log(err));
 }
 
+export function UnrateBook(isbn) {
+  return axios
+    .delete(`${baseUrl}books/rating`, { isbn })
+    .catch((err) => console.log(err));
+}
+
 export function getUserRatedBooks() {
   return axios
     .get(`${baseUrl}books/user/ratings`)
