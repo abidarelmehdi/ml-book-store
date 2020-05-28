@@ -1,3 +1,4 @@
+from math import floor
 from django.db import models
 from django.contrib.auth import get_user_model
 from core.models import CoreModel
@@ -43,10 +44,6 @@ class Book(CoreModel):
     def authors_as_text(self):
         return " | ".join(self.authors.values_list("label", flat=True))
 
-    # def save(self, *args, **kwargs):
-    #     self.language = self.title and detect(self.title)
-    #     return super().save(*args, **kwargs)
-
 
 class UserRatings(models.Model):
     book = models.ForeignKey(
@@ -62,3 +59,14 @@ class UserRatings(models.Model):
 
     class Meta:
         indexes = [models.Index(fields=["user_id"])]
+
+    def save(self, *args, **kwargs):
+        created = True if not self.id else False
+        super().save(*args, **kwargs)
+        if created:
+            # Update number of raters in book when user rate a book
+            self.book.raters = self.book.user_ratings.count()
+            self.book.avg_ratings = floor(
+                self.book.user_ratings.aggregate(models.Avg("rate"))
+            )
+            self.book.save()

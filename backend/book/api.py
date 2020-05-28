@@ -51,8 +51,8 @@ class BookRatings(APIView):
         rating, created = UserRatings.objects.update_or_create(
             book_id=isbn, user_id=request.user.id, defaults={"rate": rate},
         )
-        serialized_rating = UserRatingsSerializer(rating).data
-        return Response(serialized_rating)
+        serialized_book = BookSerializer(rating.book).data
+        return Response(serialized_book)
 
     def get(self, request, isbn):
         rating = UserRatings.objects.filter(
