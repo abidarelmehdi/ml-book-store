@@ -1,10 +1,9 @@
-from math import floor
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Count, Avg, OuterRef, Subquery
 from django.views.generic import View
 from django.db.models.functions import Coalesce, Floor
-from core.ai_models.content_based import CosineSimilarityModel
+from core.ai_models.cosine_similarity import CosineSimilarityModel
 from book.models import Book
 
 

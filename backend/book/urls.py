@@ -22,6 +22,11 @@ urlpatterns = [
         name="recommended_view",
     ),
     path(
+        "recommend/content-based",
+        api.UserRecommendedBooksListView.as_view(),
+        name="user_recommended_view",
+    ),
+    path(
         "train/content-based",
         views.TrainContentBasedModel.as_view(),
         name="content_based_training",

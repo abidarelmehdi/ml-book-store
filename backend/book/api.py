@@ -4,9 +4,24 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from core.custom.pagination import StandardResultsSetPagination
-from core.ai_models.content_based import CosineSimilarityModel
+from core.ai_models.cosine_similarity import CosineSimilarityModel
+from core.ai_models.user_preferences import UserPreferencesModel
 from book.models import Book, UserRatings
 from book.serializers import BookSerializer, UserRatingsSerializer
+
+
+class UserRecommendedBooksListView(ListAPIView):
+    serializer_class = BookSerializer
+
+    def get_queryset(self):
+        user_preference_model = UserPreferencesModel()
+        userBooks = list(
+            self.request.user.user_ratings.values("book_id", "rate")
+        )
+        recommended_books_isbn = user_preference_model.predict(userBooks)
+        recommended_books = Book.objects.filter(isbn__in=recommended_books_isbn)
+
+        return recommended_books
 
 
 class BookViewSet(ModelViewSet):
