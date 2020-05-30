@@ -130,6 +130,17 @@ CACHES = {
             "SERIALIZER": "core.redis.JSONSerializer",
         },
     },
+    "ai_2": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "REDIS_CLIENT_CLASS": "redis.client.StrictRedis",
+            "REDIS_CLIENT_KWARGS": {"decode_responses": True},
+            # Custom serializer
+            "SERIALIZER": "core.redis.JSONSerializer",
+        },
+    },
 }
 
 # Custom connection factory

@@ -1,12 +1,10 @@
 import nltk
 import pandas as pd
 import numpy as np
-from nltk.corpus import stopwords
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
-
+import pyarrow as pa
 from django.db import connection
-from django_redis import get_redis_connection
 
 
 class UserPreferencesModel(object):
@@ -15,14 +13,11 @@ class UserPreferencesModel(object):
         by calculatig the dot product of user's ratings and books categories
     """
 
-    def __init__(self, database="ai", train=False):
-        #     self.connection = get_redis_connection(database)
+    def __init__(self, train=False):
+        if train:
+            self.train(build=True)
 
-        #     # if train flag is True, the model will be trained during intanciation
-        #     if train:
-        #         self.train(build=True)
-
-        # def build_dataframe(self):
+    def build_dataframe(self):
         """
             Fill Dataframe from Django main database with a SQL query
         """
@@ -47,24 +42,35 @@ class UserPreferencesModel(object):
         # Flag that idicates that the Dataframe is filled with data
         self.is_filled = True
 
-    # def train(self, build=False):
-    #     pass
+    def train(self, build=False):
+        """
+            Train the model to generate the top 10 similar books
+            based on user profile
+        """
 
-    # def predict(self, userInputs):
-    def predict(self, userInputs):
-        books_pivot = pd.get_dummies(
+        # if build flag is true, Dataframe will be built before train the model
+        if build:
+            self.build_dataframe()
+
+        # Check Dataframe state before training the model
+        if not self.is_filled:
+            raise Exception(
+                "You cannot train the model before building the Dataframe"
+            )
+
+        pd.get_dummies(
             self.books_df["categorie"].groupby("book_id").max()
-        )
+        ).to_parquet("model.prq")
+
+    def predict(self, userInputs):
+        books_pivot = pd.read_parquet("model.prq")
         userInputs = pd.DataFrame(userInputs).set_index("book_id")
         userBooks = books_pivot[books_pivot.index.isin(userInputs.index)]
         userProfile = userBooks.transpose().dot(userInputs["rate"])
         recommendationTable_df = ((books_pivot * userProfile).sum(axis=1)) / (
             userProfile.sum()
         )
-        recommendationTable_df = recommendationTable_df.sort_values(
-            ascending=False
+        recommended_books = (
+            recommendationTable_df.sort_values(ascending=False).head(10).index
         )
-        recommended_books = self.books_df[
-            self.books_df.index.isin(recommendationTable_df.head(10).index)
-        ]
-        return recommended_books.index.to_list()
+        return recommended_books.to_list()
