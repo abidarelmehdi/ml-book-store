@@ -18,15 +18,10 @@ function Home({ books, loadBooks, userPrefBooks, loadUserPrefBooks, history }) {
   ]);
 
   return (
-    <>
-      <div className="mt-10">
-        <SuggestedBooks
-          books={userPrefBooks}
-          title={"Based on what you rated"}
-        />
-      </div>
+    <div className="max-w-7xl mx-auto">
+      <SuggestedBooks books={userPrefBooks} title={"Based on what you rated"} />
       <BooksList books={books} />
-    </>
+    </div>
   );
 }
 

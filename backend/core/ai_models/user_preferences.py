@@ -93,7 +93,7 @@ class UserPreferencesModel(object):
             aggfunc=np.sum,
         ).assign(**categories_not_rated)
 
-        # Saving Books/Categories datatframe
+        # Savingk Books/Categories datatframe
         books_categories_pivot.to_parquet(self.books_path)
 
         # Saving Users/Categories datatframe
