@@ -1,19 +1,20 @@
-import nltk
+import os
 import pandas as pd
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import CountVectorizer
-import pyarrow as pa
 from django.db import connection
 
 
 class UserPreferencesModel(object):
     """
         Content-Based model based on user's preferences
-        by calculatig the dot product of user's ratings and books categories
+        by computing the weighted average for each book based on the weight of 
+        each category for this user.
     """
 
     def __init__(self, train=False):
+        dir_path = os.path.join(os.path.dirname(__file__), "models")
+        self.books_path = os.path.join(dir_path, "books_categories.parquet")
+        self.users_path = os.path.join(dir_path, "users_categories.parquet")
         if train:
             self.train(build=True)
 
@@ -26,8 +27,8 @@ class UserPreferencesModel(object):
         self.books_df = pd.read_sql(
             """
                 SELECT
-                    isbn as book_id,
-                    label as categorie
+                    isbn,
+                    label as category
                 FROM
                     book_book
                     JOIN book_book_categories
@@ -36,7 +37,18 @@ class UserPreferencesModel(object):
                     ON category_category.id = book_book_categories.category_id
             """,
             connection,
-            index_col="book_id",
+        )
+
+        self.ratings_df = pd.read_sql(
+            """
+                SELECT
+                    user_id,
+                    book_id as isbn,
+                    rate
+                FROM
+                    book_userratings
+            """,
+            connection,
         )
 
         # Flag that idicates that the Dataframe is filled with data
@@ -58,19 +70,52 @@ class UserPreferencesModel(object):
                 "You cannot train the model before building the Dataframe"
             )
 
-        pd.get_dummies(
-            self.books_df["categorie"].groupby("book_id").max()
-        ).to_parquet("model.prq")
+        books_categories_pivot = (
+            pd.get_dummies(self.books_df.set_index("isbn")["category"])
+            .groupby("isbn")
+            .sum()
+        )
+        users_categories = pd.merge(
+            self.ratings_df,
+            self.books_df[["isbn", "category"]],
+            on="isbn",
+            how="left",
+        )
+        categories_not_rated = self.books_df[
+            ~self.books_df["category"].isin(users_categories["category"])
+        ]["category"]
+        categories_not_rated = dict.fromkeys(categories_not_rated, 0)
+        users_categories_pivot = users_categories.pivot_table(
+            index="user_id",
+            columns="category",
+            values="rate",
+            fill_value=0,
+            aggfunc=np.sum,
+        ).assign(**categories_not_rated)
 
-    def predict(self, userInputs):
-        books_pivot = pd.read_parquet("model.prq")
-        userInputs = pd.DataFrame(userInputs).set_index("book_id")
-        userBooks = books_pivot[books_pivot.index.isin(userInputs.index)]
-        userProfile = userBooks.transpose().dot(userInputs["rate"])
-        recommendationTable_df = ((books_pivot * userProfile).sum(axis=1)) / (
-            userProfile.sum()
+        # Saving Books/Categories datatframe
+        books_categories_pivot.to_parquet(self.books_path)
+
+        # Saving Users/Categories datatframe
+        users_categories_pivot.to_parquet(self.users_path)
+
+    def predict(self, user_id, nbr_books=10):
+        try:
+            books_categories_pivot = pd.read_parquet(self.books_path)
+            users_categories_pivot = pd.read_parquet(self.users_path)
+        except Exception:
+            raise Exception("Model not tained yet !")
+
+        user_profile = users_categories_pivot.loc[user_id]
+
+        user_books = round(
+            (books_categories_pivot * user_profile).sum(axis=1)
+            / user_profile.sum(),
+            3,
         )
-        recommended_books = (
-            recommendationTable_df.sort_values(ascending=False).head(10).index
+
+        top_n_books = (
+            user_books.sort_values(ascending=False).head(nbr_books).index
         )
-        return recommended_books.to_list()
+
+        return top_n_books.to_list()

@@ -3,6 +3,7 @@ media
 static
 *.log
 *.pot
+*.parquet
 .vscode/
 *.egg-info
 *.py[co]

@@ -4,7 +4,10 @@
 {% block object-tools-items %}
 {{ block.super }}
 <li>
-    <a href="{% url 'books:content_based_training' %}" class="changelink">Train</a>
+    <a href="{% url 'books:cosine_similarity_training' %}" class="changelink">Cosine Training</a>
+</li>
+<li>
+    <a href="{% url 'books:user_preferences_training' %}" class="changelink">User prefrences Training</a>
 </li>
 <li>
     <a href="{% url 'books:refresh_books' %}" class="changelink">Refresh Books</a>

@@ -4,6 +4,7 @@ from django.db.models import Count, Avg, OuterRef, Subquery
 from django.views.generic import View
 from django.db.models.functions import Coalesce, Floor
 from core.ai_models.cosine_similarity import CosineSimilarityModel
+from core.ai_models.user_preferences import UserPreferencesModel
 from book.models import Book
 
 
@@ -12,13 +13,23 @@ def load_data(request):
     return HttpResponse("Good")
 
 
-class TrainContentBasedModel(View):
+class CosineSimilarityContentBasedModel(View):
     """
         Simple view to trigger training of content-based model
     """
 
     def get(self, request):
         CosineSimilarityModel(train=True)
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+
+
+class UserPreferencesContentBasedModel(View):
+    """
+        Simple view to train user preference content based model
+    """
+
+    def get(self, request):
+        UserPreferencesModel(train=True)
         return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
 

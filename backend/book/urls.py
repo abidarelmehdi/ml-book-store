@@ -27,9 +27,14 @@ urlpatterns = [
         name="user_recommended_view",
     ),
     path(
-        "train/content-based",
-        views.TrainContentBasedModel.as_view(),
-        name="content_based_training",
+        "train/content-based/cosine_similarity",
+        views.CosineSimilarityContentBasedModel.as_view(),
+        name="cosine_similarity_training",
+    ),
+    path(
+        "train/content-based/user_preferences",
+        views.UserPreferencesContentBasedModel.as_view(),
+        name="user_preferences_training",
     ),
     path("refresh", views.RefreshBooks.as_view(), name="refresh_books",),
     path("load_data", views.load_data, name="load_data")

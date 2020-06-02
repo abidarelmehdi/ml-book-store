@@ -14,11 +14,9 @@ class UserRecommendedBooksListView(ListAPIView):
     serializer_class = BookSerializer
 
     def get_queryset(self):
-        userBooks = list(
-            self.request.user.user_ratings.values("book_id", "rate")
-        )
+        user_id = self.request.user.id
         user_preference_model = UserPreferencesModel()
-        recommended_books_isbn = user_preference_model.predict(userBooks)
+        recommended_books_isbn = user_preference_model.predict(user_id, 20)
         recommended_books = Book.objects.filter(isbn__in=recommended_books_isbn)
 
         return recommended_books
