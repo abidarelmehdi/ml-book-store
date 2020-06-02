@@ -104,7 +104,7 @@ class UserPreferencesModel(object):
             books_categories_pivot = pd.read_parquet(self.books_path)
             users_categories_pivot = pd.read_parquet(self.users_path)
         except Exception:
-            raise Exception("Model not tained yet !")
+            raise Exception("Model not trained yet !")
 
         user_profile = users_categories_pivot.loc[user_id]
 
