@@ -15,8 +15,14 @@ class UserRecommendedBooksListView(ListAPIView):
 
     def get_queryset(self):
         user_id = self.request.user.id
+        user_inputs = (
+            user_id,
+            list(
+                self.request.user.user_ratings.values_list("book_id", flat=True)
+            ),
+        )
         user_preference_model = UserPreferencesModel()
-        recommended_books_isbn = user_preference_model.predict(user_id, 20)
+        recommended_books_isbn = user_preference_model.predict(user_inputs)
         recommended_books = Book.objects.filter(isbn__in=recommended_books_isbn)
 
         return recommended_books

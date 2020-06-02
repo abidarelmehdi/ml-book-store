@@ -99,13 +99,17 @@ class UserPreferencesModel(object):
         # Saving Users/Categories datatframe
         users_categories_pivot.to_parquet(self.users_path)
 
-    def predict(self, user_id, nbr_books=10):
+    def predict(self, user_inputs, nbr_books=10):
+        user_id, user_rated_books = user_inputs
         try:
             books_categories_pivot = pd.read_parquet(self.books_path)
             users_categories_pivot = pd.read_parquet(self.users_path)
         except Exception:
             raise Exception("Model not trained yet !")
 
+        books_categories_pivot = books_categories_pivot[
+            ~books_categories_pivot.index.isin(user_rated_books)
+        ]
         user_profile = users_categories_pivot.loc[user_id]
 
         user_books = round(
