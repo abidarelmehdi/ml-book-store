@@ -47,9 +47,7 @@ class RecommendedBooksListView(ListAPIView):
         isbn_recommended_books = model.predict(self.kwargs.get("isbn"))
 
         # Get all books with those ISBNs
-        recommended_books = Book.objects.filter(
-            isbn__in=isbn_recommended_books.keys()
-        )
+        recommended_books = Book.objects.filter(isbn__in=isbn_recommended_books)
 
         return recommended_books
 
