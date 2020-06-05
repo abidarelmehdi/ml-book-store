@@ -2,28 +2,17 @@ version: "3.7"
 
 services:
   db:
-    image: "postgres:12"
+    image: postgres:12
     container_name: postgres_books
     hostname: postgres_books
     environment:
-      - POSTGRES_DB=books
+      - POSTGRES_DB=$DB_NAME
       - POSTGRES_USER=$DB_USER
       - POSTGRES_PASSWORD=$DB_PASSWORD
     ports:
       - "$DB_PORT:5432"
     volumes:
+      - ./books_backup.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres_books_data:/var/lib/postgresql/data/
-
-  redis:
-    image: redis:5
-    container_name: redis_books
-    hostname: redis_books
-    ports:
-      - "$REDIS_PORT:6379"
-    volumes:
-      - redis_books_data:/data
-    restart: on-failure
-
 volumes:
   postgres_books_data:
-  redis_books_data:
