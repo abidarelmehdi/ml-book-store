@@ -14,7 +14,7 @@ class UserRecommendedBooksListView(ListAPIView):
     serializer_class = BookSerializer
 
     def get_queryset(self):
-        user_id = self.request.user.id
+        user_id = self.request.user.id or self.kwargs.get("user_id")
         user_inputs = (
             user_id,
             list(

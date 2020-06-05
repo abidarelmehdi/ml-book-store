@@ -17,14 +17,19 @@ urlpatterns = [
         name="user_rated_books",
     ),
     path(
-        "recommend/content-based/<str:isbn>",
+        "recommend/content-based/book/<str:isbn>",
         api.RecommendedBooksListView.as_view(),
-        name="recommended_view",
+        name="book_recommended_view",
     ),
     path(
-        "recommend/content-based",
+        "recommend/content-based/user",
         api.UserRecommendedBooksListView.as_view(),
         name="user_recommended_view",
+    ),
+    path(
+        "recommend/content-based/user/<int:user_id>",
+        api.UserRecommendedBooksListView.as_view(),
+        name="user_recommended_view_with_id",
     ),
     path(
         "train/content-based/cosine_similarity",
