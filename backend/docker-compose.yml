@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile.app
-    image: backend:latest
+    image: backend
     hostname: backend
     container_name: backend
     command: gunicorn book_store.wsgi -b 0.0.0.0:8000
@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile.nginx
     hostname: nginx
-    image: nginx:latest
+    image: nginx
     container_name: nginx
     ports:
       - 8001:80
@@ -32,7 +32,7 @@ services:
     build:
       context: ../frontend
       dockerfile: ./docker/Dockerfile.react
-    image: frontend:latest
+    image: frontend
     hostname: frontend
     container_name: frontend
     ports:
