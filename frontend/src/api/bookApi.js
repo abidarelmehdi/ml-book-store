@@ -37,12 +37,12 @@ export function UserBookRating(isbn) {
 
 export function getUserPreferenceBooks() {
   return axios
-    .get(`${baseUrl}books/recommend/content-based`, { timeout: 60000 })
+    .get(`${baseUrl}books/recommend/content-based/user`, { timeout: 60000 })
     .catch((err) => console.log(err));
 }
 
 export function getCoSinSimilarBooks(isbn) {
   return axios
-    .get(`${baseUrl}books/recommend/content-based/${isbn}`)
+    .get(`${baseUrl}books/recommend/content-based/book/${isbn}`)
     .catch((err) => console.log(err));
 }
