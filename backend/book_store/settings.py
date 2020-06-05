@@ -14,6 +14,9 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
 AUTH_USER_MODEL = "users.CustomUser"
 
+CORS_ORIGIN_ALLOW_ALL = config(
+    "CORS_ORIGIN_ALLOW_ALL", default=False, cast=bool
+)
 CORS_ORIGIN_WHITELIST = config("CORS_ORIGIN_WHITELIST", cast=Csv())
 
 # Application definition
@@ -118,29 +121,7 @@ CACHES = {
             # Custom serializer
             "SERIALIZER": "core.redis.JSONSerializer",
         },
-    },
-    "ai": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "REDIS_CLIENT_CLASS": "redis.client.StrictRedis",
-            "REDIS_CLIENT_KWARGS": {"decode_responses": True},
-            # Custom serializer
-            "SERIALIZER": "core.redis.JSONSerializer",
-        },
-    },
-    "ai_2": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "REDIS_CLIENT_CLASS": "redis.client.StrictRedis",
-            "REDIS_CLIENT_KWARGS": {"decode_responses": True},
-            # Custom serializer
-            "SERIALIZER": "core.redis.JSONSerializer",
-        },
-    },
+    }
 }
 
 # Custom connection factory
@@ -176,6 +157,6 @@ NUMBER_GROUPING = 3
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = "/static/"
-STATIC_URL = "/static/"
+STATIC_ROOT = "/static/"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")

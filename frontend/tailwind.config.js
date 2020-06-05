@@ -8,5 +8,6 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/ui"), require("tailwindcss-rtl")],
+  plugins: [require("@tailwindcss/ui")],
+  purge: ["./src/**/*.html", "./src/**/*.jsx"],
 };

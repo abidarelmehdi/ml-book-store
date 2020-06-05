@@ -1,6 +1,45 @@
 version: "3.7"
 
 services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.app
+    image: backend:latest
+    hostname: backend
+    container_name: backend
+    command: gunicorn book_store.wsgi -b 0.0.0.0:8000
+    links:
+      - db
+    volumes:
+      - static-files:/static/
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.nginx
+    hostname: nginx
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - 8001:80
+    volumes:
+      - static-files:/static/
+    links:
+      - backend
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ./docker/Dockerfile.react
+    image: frontend:latest
+    hostname: frontend
+    container_name: frontend
+    ports:
+      - 80:80
+    links:
+      - backend
+
   db:
     image: postgres:12
     container_name: postgres_books
@@ -16,3 +55,4 @@ services:
       - postgres_books_data:/var/lib/postgresql/data/
 volumes:
   postgres_books_data:
+  static-files:
